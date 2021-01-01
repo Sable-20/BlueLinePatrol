@@ -159,3 +159,5 @@ async def custom(ctx):
     embed.add_field(name="spotify", value="Send a link the Blue Line Patrol's spotify")
     embed.add_field(name="merch", value="Send a link to Blue Line Patrol's M E R C H")
     await ctx.send(embed=embed)
+
+bot.run("token-or-reference-to-token")
