@@ -1,0 +1,13 @@
+discord.py
+random
+math
+sys
+traceback
+json
+datetime
+asyncio
+os
+platform
+colorama
+PIL
+io
