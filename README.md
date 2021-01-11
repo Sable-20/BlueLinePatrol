@@ -22,12 +22,6 @@ ALL COMMANDS WITH NOTABLE ISSUES
 #########################################################
 ########################################################
 
-
-ban, kick, mute, and most moderation commands(exclduing purge, lockdown, nuke, and slowmode)
-    - none of them can affect anyone higher up in the role hierarchy than the bot itself. no you do not need to make the bot visible above all others just moving its role is fine
-
-    - in theory you could simply substitute it for moving the server bot role up but I dont know how that would affect it I am in the process of testing it
-
 HMUTE
     - for whatever reason it still removes all roles so consider it hardmute.
 
