@@ -23,7 +23,7 @@ class moderation(commands.Cog):
     async def purge(self, ctx, amount=2):
         if amount > 200: #maxes out at 200 messages for lag saving purposes
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "You cannot clear this many messages"
             await ctx.send(embed=embed)
         await ctx.channel.purge(limit=amount)
@@ -35,20 +35,20 @@ class moderation(commands.Cog):
         if ctx.author.top_role < member.top_role: #checks for higher role
             #dont ask why you can compare a string like its a number
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "You cannot kick someone with a higher role than you"
             await ctx.send(embed=embed)
             return
         elif ctx.author.top_role == member.top_role: #checking if the roles equal eachother
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "You cannot kick someone with the same role as you"
             await ctx.send(embed=embed)
             return
         else: #any other situation
             if member == None:
                 embed = discord.Embed()
-                embed.set_author(name="Copper")
+                embed.set_author(name="BLP")
                 embed.description = "Please mention someone to kick"
                 await ctx.send(embed=embed)
                 return
@@ -58,7 +58,7 @@ class moderation(commands.Cog):
                 pass
             await member.kick(reason=reason)
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "Successfully kicked **{}**.".format(member) #sucess message
             await ctx.send(embed=embed)
 
@@ -69,30 +69,30 @@ class moderation(commands.Cog):
         #parameters will be reffered to a variables from now on
         if ctx.author.top_role < member.top_role: #fuckery with checking roles
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "You cannot ban someone with a higher role than you"
             await ctx.send(embed=embed)
             return
         elif ctx.author.top_role == member.top_role: # more role checking
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "You cannot ban someone with the same role as you"
             await ctx.send(embed=embed)
             return
         else:
             if member == None: #bleh
                 embed = discord.Embed()
-                embed.set_author(name="Copper")
+                embed.set_author(name="BLP")
                 embed.description = "Please mention someone to ban"
                 await ctx.send(embed=embed)
                 return
             try:
-                await member.send(f"You have been banned from the guild.\n**REASON: **{reason}")
+                await member.send(f"Dear {member}. :wave:\n You have been banned from the BlueLinePatrol Community Server for: {reason}\nYou can no longer rejoin unless you get unbanned. If you want to know how you can get unbanned, read the unban part below. \n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\nIf you feel like your ban was not right, then fill out this form:\nhttps://forms.gle/iBNsFv3w4eVgB6zi6 \nIf you would like to fill out a ban appeal to be unbanned, please fill out this form: \nhttps://forms.gle/ayaDwW2ZEvdUSxrH7 \n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ \nThank you for understanding. \nYour BLP Staff. \n")
             except:
                 pass
             await member.ban(reason=reason)
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "Successfully banned **{}**.".format(member)
             await ctx.send(embed=embed)
 
@@ -102,20 +102,20 @@ class moderation(commands.Cog):
     async def softban(self, ctx, member: discord.Member, *, reason="No reason was provided"): #local variables
         if ctx.author.top_role < member.top_role: #fuckery with roles 
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "You cannot ban someone with a higher role than you"
             await ctx.send(embed=embed)
             return
         elif ctx.author.top_role == member.top_role:
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "You cannot ban someone with the same role as you"
             await ctx.send(embed=embed)
             return
         else:
             if member == None:
                 embed = discord.Embed()
-                embed.set_author(name="Copper")
+                embed.set_author(name="BLP")
                 embed.description = "Please mention someone to ban"
                 await ctx.send(embed=embed)
                 return
@@ -126,7 +126,7 @@ class moderation(commands.Cog):
             await member.ban(reason=reason)
             await ctx.guild.unban(member)
             embed = discord.Embed()
-            embed.set_author(name="Copper")
+            embed.set_author(name="BLP")
             embed.description = "Successfully soft banned **{}**.".format(member)
             await ctx.send(embed=embed)
 
@@ -157,7 +157,7 @@ class moderation(commands.Cog):
         if member == None:#if theyre not mentioned
             embed = discord.Embed()
             embed.set_author(name="BLP")
-            embed.description = "Please mentiona member"
+            embed.description = "Please mention a member"
             await ctx.send(embed=embed)
             return
         role = discord.utils.get(ctx.guild.roles, name="HardMuted")
@@ -186,9 +186,9 @@ class moderation(commands.Cog):
     
     #unmute
     #self explanatory but it unmutes a person
-    @commands.command(aliases=['unhmute'])
+    @commands.command(aliases=['unhardmute'])
     @commands.has_permissions(manage_roles=True)
-    async def unhardmute(self, ctx, member: discord.Member=None):
+    async def unhmute(self, ctx, member: discord.Member=None):
         if member == None: #incase they dont mention a user
             #NOTE: THEY MUST BE MENTIONED 
             #EXAMPLE: @misaka#xxxx
@@ -197,7 +197,7 @@ class moderation(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name="HardMuted")#find the role 'Muted'
         try:
             await member.remove_roles(role)
-            await ctx.send(f"{member} sucessfully unhard-muted") #removes it
+            await ctx.send(f"{member} sucessfully un-hard-muted") #removes it
         except Exception:
             await ctx.send("That user isnt hard muted") #incase they arent muted
 
@@ -260,6 +260,43 @@ class moderation(commands.Cog):
         embed.set_image(url="http://images5.fanpop.com/image/photos/24800000/Kaboom-rico-the-penguin-24826931-1024-768.jpg")
         embed.set_footer(text="Yes Rico, kaboom")
         await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def mute(self, ctx, member: discord.Member,*,reason=None):#initializing local variables
+        if member == None:#if theyre not mentioned
+            embed = discord.Embed()
+            embed.set_author(name="BLP")
+            embed.description = "Please mention a member"
+            await ctx.send(embed=embed)
+            return
+        role = discord.utils.get(ctx.guild.roles, name="Muted")
+        if role not in ctx.guild.roles: #if the role doesnt exist the bot creates one wiht default overwrites
+            perms = discord.Permissions(add_reactions=False, send_messages=False, connect=False)
+            await ctx.guild.create_role(name="Muted", permissions=perms)
+            await member.add_roles(role)
+            embed = discord.Embed(title=f"{member} has been muted")
+            await ctx.send(embed=embed)
+        else: #if its already made and the bot can access it
+            await member.add_roles(role)
+            embed = discord.Embed(title=f"{member} has been muted")
+            await ctx.send(embed=embed)
+  
+
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def unmute(self, ctx, member: discord.Member=None):
+        if member == None: #incase they dont mention a user
+            #NOTE: THEY MUST BE MENTIONED 
+            #EXAMPLE: @misaka#xxxx
+            await ctx.send("Please specify a user!")
+            return
+        role = discord.utils.get(ctx.guild.roles, name="Muted")#find the role 'Muted'
+        try:
+            await member.remove_roles(role)
+            await ctx.send(f"{member} sucessfully unmuted") #removes it
+        except Exception:
+            await ctx.send("That user isnt muted") #incase they arent muted
 
 def setup(bot):
     bot.add_cog(moderation(bot))

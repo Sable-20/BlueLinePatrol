@@ -5,10 +5,14 @@ import math
 import sys
 import traceback
 import json
+import os
+from dotenv import load_dotenv
 # import mysql.connector
 # import pymongo
 # import dns
 
+load_dotenv()
+token = os.getenv("DISCORD_TOKEN")
 
 filtered_words = ["cock",
                   "hore",
@@ -29,18 +33,18 @@ filtered_words = ["cock",
                   "kyke", #never hear of this
                   "dyke",
                   "nigger",
-                  "niger",
+                  #"niger",
                   "n1gg3r",
                   "n1gg@",
                   "nigg@",
                   "nigg3r"]
 
-filtup = filtered_words.upper()
-
-
-
-
-bot = commands.Bot(command_prefix='.', case_insensitive=True, owner_ids=[451484425591586817, 561291092809482240])
+# 451484425591586817
+bot = commands.Bot(command_prefix="%", case_insensitive=True, owner_ids=[451484425591586817, 
+                                                                         561291092809482240,
+                                                                         404793894702940160,
+                                                                         317392660023476226,
+                                                                         517018567716241423])
 bot.remove_command('help')
 
 initial_extensions = ['cogs.moderation',
@@ -57,7 +61,6 @@ if __name__ == "__main__":
         except Exception as e:
             print(f'Failed to load {extension}', file=sys.stderr)
             traceback.print_exc()   
-
 
 @bot.event
 async def on_ready():
@@ -80,27 +83,34 @@ async def logout_error(ctx, error):
 #LEVELING
 ###################################################################
 
+# mydb = mysql.connector.connect(
+#     host = "localhost",
+#     user = "root",
+#     password = "toor",
+#     database = "userlevels",
+#     auth_plugin = "mysql_native_password"
+# )
+
+
+# def generateXP():
+#     return math.floor(random.randint(0, 3))
+
 @bot.listen('on_message')
 async def on_message(message):
+
+    trole = message.channel.guild.get_role(716713689788579840)
+
     if message.author.bot:
         return
 
-    
     for word in filtered_words:
         if word in message.content:
-            await message.delete()
-            embed = discord.Embed()
-            embed.description = f"{message.author.id} please refrain from using that word. ~BLP staff"
-            await message.channel.send(embed=embed)
+            if message.channel.author.top_role < trole:
+                await message.delete()
+                embed = discord.Embed()
+                embed.description = f"{message.author.id} please refrain from using that word. ~BLP staff"
+                await message.channel.send(embed=embed)
     
-    for word in filtup:
-        if word in message.content:
-            await message.delete()
-            embed = discord.Embed()
-            embed.description = f"{message.author.id} please refrain from using that word. ~BLP staff"
-            await message.channel.send(embed=embed)
-
-
     # cursor = mydb.cursor()
 
 
@@ -135,8 +145,6 @@ async def on_message(message):
     #         mydb.commit()
     #         print("Database updated...")
 
-
-
 ###########################################################
 #    H E L P C O M M A N D
 ###########################################################
@@ -157,13 +165,13 @@ async def moderation(ctx):
     embed.add_field(name="Purge", value="Purges the specified amoutn of messages... default is two\n.purge 2")
     embed.add_field(name="Kick", value="Kicks specified member\n.kick @misaka")
     embed.add_field(name="Ban", value="Bans the specified member\n.ban @misaka")
-    embed.add_field(name="Softban", value="Bans and immediately unbans member to clear their messages\n.softban @misaka")
+    embed.add_field(name="Softban", value="***WIP***\nBans and immediately unbans member to clear their messages\n.softban @misaka")
     embed.add_field(name="Unban", value="Unbans a member, their full username and discriminator must be mentioned\n.unban misaka#XXXX")
-    embed.add_field(name="Hardute", value="Mutes the specified member... if the role does not exist the bot will create one\n.hmute @misaka")
-    embed.add_field(name="Unhardmute", value="Unmutes the specified member\n.unhmute @misaka")
+    embed.add_field(name="Mute", value="Mutes the specified member... if the role does not exist the bot will create one\n.mute @misaka")
+    embed.add_field(name="Unmute", value="Unmutes the specified member\n.unmute @misaka")
     embed.add_field(name="Slowmode", value="Sets the slow mode of a channel to the specified amount of ***seconds***\n.slowmode 5")
     embed.add_field(name="Lockdown", value="***WIP***\nComing Soon....")
-    embed.add_field(name="Nuke", value="nukes the channel by deleting as many messages as possible\n.nuke")
+    embed.add_field(name="Nuke", value="***WIP***\nnukes the channel by deleting as many messages as possible\n.nuke")
     await ctx.send(embed=embed)
 
 @help.command()
@@ -187,7 +195,6 @@ async def fun(ctx):
     embed.add_field(name="Thanks", value="Thanks a mentioned member")
     embed.add_field(name="okboomer", value="***O K B O O M E R***")
     embed.add_field(name="Loverate", value="rate the love in the air")
-    embed.add_field(name="Snipe", value="***WIP***\n.snipe")                
     await ctx.send(embed=embed)
 
 @help.command()
@@ -202,4 +209,4 @@ async def custom(ctx):
     embed.add_field(name="merch", value="Send a link to Blue Line Patrol's M E R C H")
     await ctx.send(embed=embed)
 
-bot.run("NzkwOTQ1ODM1MTg0NTUzOTg0.X-H_tg.O15gUqUoTNLWVuoJiR8oo4t7CXo")
+bot.run(token)

@@ -30,14 +30,14 @@ class utility(commands.Cog):
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f"Requested by {ctx.author}")
 
-        embed.add_field(name="ID: ", value=member.id)
-        embed.add_field(name="Display Name: ", value=member.display_name)
+        embed.add_field(name="ID: ", value=member.id, inline=False)
+        embed.add_field(name="Display Name: ", value=member.display_name, inline=False)
 
-        embed.add_field(name="Created Account On: ", value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
-        embed.add_field(name="Joined Server On: ", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
+        embed.add_field(name="Created Account On: ", value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"), inline=False)
+        embed.add_field(name="Joined Server On: ", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"), inline=False)
 
-        embed.add_field(name="Roles: ", value="".join([role.mention for role in roles]))
-        embed.add_field(name="Highest Role: ", value=member.top_role.mention)
+        embed.add_field(name="Roles: ", value="".join([role.mention for role in roles]), inline=False)
+        embed.add_field(name="Highest Role: ", value=member.top_role.mention, inline=False)
         print(member.top_role.mention)
         await ctx.send(embed=embed)
 
@@ -61,14 +61,13 @@ class utility(commands.Cog):
 
     @commands.command()
     async def report(self, ctx, member: discord.Member, *, reason):
-        rchannel = ctx.channel.get_channel(738667684899717220)
+        rchannel = ctx.get_channel(738667684899717220)
 
         embed = discord.Embed(title=f"New report")
         embed.add_field(name="Reporter: ", value=f"{ctx.author.mention}")
         embed.add_field(name="Reportee: ", value=f"{member.mention}")
         embed.add_field(name="Reason: ", value=f"{reason}")
         await rchannel.send(embed=embed)
-
 
 def setup(bot):
     bot.add_cog(utility(bot))

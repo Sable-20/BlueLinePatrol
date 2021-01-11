@@ -45,6 +45,7 @@ class fun(commands.Cog):
         return
 
     @commands.command(aliases=["8ball"])
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def _8ball(self, ctx, *, question):
         # 8 ball shitty responses
         responses = [
@@ -79,6 +80,7 @@ class fun(commands.Cog):
 
     #coinflip just chooses heads of tails
     @commands.command()
+    @commands.cooldown(1, 3, commands.BucketType.user)
     async def coinflip(self, ctx):
         choices = [
             "heads",
@@ -90,11 +92,12 @@ class fun(commands.Cog):
 
     #dunno why i included this but its fun
     @commands.command()
+    @commands.cooldown(1, 20, commands.BucketType.user)
     async def gayrate(self, ctx, member: discord.Member=None):
         if not member:
             member = ctx.message.author
         # randomly chooses number from 20 to 100
-        percent = math.floor(random.random()*101 + 20)
+        percent = math.floor(random.random()*101)
 
         #saying how G A Y one is
         embed = discord.Embed(title=f"{member} is **{percent}%** gay!")
@@ -102,6 +105,7 @@ class fun(commands.Cog):
 
     #horny jail may have to remove
     @commands.command(aliases=['hj'])
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def hornyjail(self, ctx, member: discord.Member = None):
         if not member:
             await ctx.send("You cant send yourself to horny jail")
@@ -114,6 +118,7 @@ class fun(commands.Cog):
 
     #b o n k
     @commands.command(aliases=['bnk'])
+    @commands.cooldown(1, 2, commands.BucketType.user)
     async def bonk(self, ctx, member: discord.Member = None):
         if not member:
             await ctx.send("You cant bonk yourself")
@@ -135,13 +140,14 @@ class fun(commands.Cog):
 
     #WIP
     @commands.command()
+    @commands.cooldown(1, 30, commands.BucketType.user)
     async def wanted(self, ctx, member: discord.Member=None): 
         if not member:
             member = ctx.message.author
             
         wanted = Image.open("images/wanted.jpg")
 
-        asset = member.author.avatar_url_as(size = 128)
+        asset = member.avatar_url_as(size = 128)
         data = BytesIO(await asset.read())
         pfp = Image.open(data)
 
@@ -168,16 +174,18 @@ class fun(commands.Cog):
     # DO NOT INCLUDE IN HELP COMMAND
     #######################################
     @commands.command()
-    async def spank(self, ctx, member: discord.Member):
+    @commands.is_owner()
+    async def spank(self, ctx, member: discord.Member=None):
         if not member:
             ctx.send("Cant spank yourself silly")
         
-        embed = discord.Embed(title=f"Get spanked {member}")
+        embed = discord.Embed(title=f"Get spanked {member.name}")
         embed.set_image(url="https://gifimage.net/wp-content/uploads/2017/09/anime-spanking-gif.gif")
         ctx.send(embed=embed)
 
     # b o o m e r
     @commands.command(aliases=["boomer"])
+    @commands.cooldown(1, 10, commands.BucketType.user)
     async def okboomer(self, ctx):
         boomers = [
             "https://www.barnorama.com/wp-content/uploads/2019/06/smile_to_hide_your_inner_pain-2.jpg",
@@ -209,15 +217,15 @@ class fun(commands.Cog):
     #mhmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
     # l o v e y d o v e y
     @commands.command(aliases=["lovers", "love", "ratemylove"])
-    async def loverate(self, ctx, member: discord.Member):
+    async def loverate(self, ctx, member: discord.Member, *, memberTwo: discord.Member):
         if not member:
-            await ctx.send("Im afraid I cant rate the love of yourself")
+            member = ctx.message.author
 
         else:
             love_percent = round(random.randint(0,100))
             embed = discord.Embed(title="Love Rate",
                                 color = discord.Color.dark_magenta())
-            embed.add_field(name=f"And the love rating between {ctx.message.author} and {member} is...", value=f"***{love_percent}%***")
+            embed.add_field(name=f"And the love rating between {member} and {memberTwo} is...", value=f"***{love_percent}%***")
             await ctx.send(embed=embed)
 
 
