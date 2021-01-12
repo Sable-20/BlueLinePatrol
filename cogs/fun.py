@@ -103,6 +103,27 @@ class fun(commands.Cog):
         embed = discord.Embed(title=f"{member} is **{percent}%** gay!")
         await ctx.send(embed=embed)
 
+    @commands.command()
+    @commands.is_owner()
+    async def kiss(self, ctx, member: discord.Member=None):
+        if not member:
+            member = ctx.message.author
+            
+
+        embed = discord.Embed(title="*kisses*")
+        embed.set_image(url="https://images-ext-2.discordapp.net/external/YXY1VV90-eTeaTczOTssDO4d50Poi79l2NMmKdbbnrs/https/cdn.weeb.sh/images/ryceu6V0W.gif")
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def kill(self, ctx, member: discord.Member=None):
+        if not member:
+            member = ctx.message.author
+            
+        embed = discord.Embed(title="BANG")
+        embed.set_image(url="http://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-14.gif")
+        await ctx.send(embed=embed)
+
     #horny jail may have to remove
     @commands.command(aliases=['hj'])
     @commands.cooldown(1, 5, commands.BucketType.user)
